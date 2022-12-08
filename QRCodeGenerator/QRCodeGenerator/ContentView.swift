@@ -15,6 +15,8 @@ struct ContentView: View {
     @State var link = ""
     @State var qrImage: UIImage?
     
+    private let logoImage = UIImage(named: "Kinemaster")
+    
     var body: some View {
         VStack {
             Text("QRCodeGenerator")
@@ -25,7 +27,7 @@ struct ContentView: View {
             
             HStack {
                 TextField(
-                    "weblink",
+                    "Weblink",
                     text: $link
                 )
                 .textFieldStyle(.roundedBorder)
@@ -40,15 +42,18 @@ struct ContentView: View {
             
             if let qrImage = qrImage {
                 GeometryReader { proxy in
-                    Image(uiImage: qrImage)
-                        .resizable()
-                        .frame(
-                            width: proxy.size.width,
-                            height: proxy.size.width
-                        )
-                        .overlay(
-                            Image(systemName: "person.fill")
-                        )
+                    VStack(spacing: 0) {
+                        Image(uiImage: qrImage)
+                            .resizable()
+                            .frame(
+                                width: proxy.size.width,
+                                height: proxy.size.width
+                            )
+                        
+                        Image(uiImage: logoImage ?? .init())
+                            .renderingMode(.template)
+                            .foregroundColor(.black)
+                    }
                 }
                 .padding()
             }
